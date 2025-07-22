@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+*.env
+.vscode/ # Opcional: Se usa VS Code e não quer compartilhar configurações do editor
+.idea/ # Opcional: Se usa PyCharm
+
+# Django
+*.log
+*.sqlite3
+db.sqlite3
+/media
+/static_collected # Se você tiver uma pasta para arquivos estáticos coletados
+local_settings.py # Se você tiver um arquivo de configurações locais separado
+
+# Arduino/ESP
+*.hex
+*.bin
+*.elf
+*.lst
+*.map
+.vscode/ # Se usa VS Code para Arduino
+build/ # Pasta de build do Arduino IDE
+
+# Arquivos de configurações sensíveis
+password_ssid.h # MUITO IMPORTANTE! Contém suas credenciais Wi-Fi.
