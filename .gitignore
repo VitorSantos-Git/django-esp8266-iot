@@ -28,4 +28,7 @@ local_settings.py # Se você tiver um arquivo de configurações locais separado
 build/ # Pasta de build do Arduino IDE
 
 # Arquivos de configurações sensíveis
-password_ssid.h # MUITO IMPORTANTE! Contém suas credenciais Wi-Fi.
+# Mude para o caminho relativo ou use um padrão genérico para qualquer subpasta
+#sketch_frmware_esp/password_ssid.h # <--- Mude para isso se for apenas nessa pasta
+# OU para ignorar qualquer arquivo com esse nome em qualquer subpasta:
+ **/password_ssid.h # <--- Mais genérico, ignora em qualquer subdiretório

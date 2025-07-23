@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework', 
     'devices', 
+    'django_celery_beat', # <<< ADICIONE ESTA LINHA
+    # 'django_celery_results', # Opcional: Para armazenar resultados de tarefas no DB
 ]
 
 MIDDLEWARE = [
@@ -124,3 +126,32 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Celery Configuration
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0' # URL do seu servidor Redis
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0' # Onde os resultados das tarefas são armazenados
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'America/Sao_Paulo' # Ou seu fuso horário local
+CELERY_ENABLE_UTC = False # Defina como False se CELERY_TIMEZONE estiver definido
+
+"""# Configurações para o Celery Beat (agendador)
+CELERY_BEAT_SCHEDULE = {
+    # Exemplo de tarefa agendada (pode ser removida depois)
+    'add-every-10-seconds': {
+        'task': 'devices.tasks.debug_task_example', # Caminho para a sua tarefa
+        'schedule': 10.0, # Executa a cada 10 segundos
+        'args': ('Hello from Celery Beat!',)
+    },
+}"""
+
+# Tarefa para verificar e despachar comandos agendados a cada minuto
+CELERY_BEAT_SCHEDULE = {
+'check-and-dispatch-scheduled-commands': {
+        'task': 'devices.tasks.check_and_dispatch_scheduled_commands',
+        'schedule': 60.0, # Executa a cada 60 segundos (1 minuto)
+        'args': (),
+    },
+}
+

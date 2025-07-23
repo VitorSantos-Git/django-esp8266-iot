@@ -1,5 +1,18 @@
 # devices/models.py
 from django.db import models
+from django.utils import timezone
+from django.core.exceptions import ValidationError
+#import json
+
+
+"""# Função de validação para o campo JSONField
+def validate_json_command(value):
+    try:
+        json.loads(value)
+    except json.JSONDecodeError:
+        raise ValidationError("O campo 'Comando JSON' deve ser um JSON válido.")
+"""
+
 
 class Device(models.Model):
     # Campos de identificação e status do dispositivo
@@ -85,3 +98,71 @@ class Device(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.device_id})"
+    
+
+class ScheduledCommand(models.Model):
+    DAY_CHOICES = [
+        (0, 'Domingo'),
+        (1, 'Segunda-feira'),
+        (2, 'Terça-feira'),
+        (3, 'Quarta-feira'),
+        (4, 'Quinta-feira'),
+        (5, 'Sexta-feira'),
+        (6, 'Sábado'),
+    ]   
+
+    name = models.CharField(max_length=255, help_text="Nome descritivo para o agendamento (ex: Ligar Luz da Sala)")
+    
+    # Relação Many-to-Many com Device, para que um agendamento possa afetar múltiplos dispositivos
+    devices = models.ManyToManyField(Device, related_name='scheduled_commands', 
+                                     help_text="Selecione os dispositivos que receberão este comando.")
+    
+    command_json = models.JSONField(
+        help_text="Comando a ser enviado no formato JSON (ex: {\"action\": \"ligar_rele\", \"target\": \"rele_D1\", \"value\": 1})",
+        #validators=[validate_json_command] # Adiciona validação para JSON válido
+    )
+    
+    # Opções de agendamento
+    schedule_type = models.CharField(
+        max_length=50, 
+        choices=[('daily', 'Diário'), ('weekly', 'Semanal'), ('once', 'Uma Vez')],
+        default='weekly',
+        help_text="Tipo de agendamento: Diário (todos os dias), Semanal (dias específicos), Uma Vez (data e hora únicas)."
+    )
+    
+    # Para agendamentos semanais
+    day_of_week = models.ManyToManyField(
+        'DayOfWeek',
+        blank=True,
+        help_text="Selecione os dias da semana para agendamentos semanais."
+    )
+    
+    # Hora do dia para agendamentos diários/semanais
+    time_of_day = models.TimeField(blank=True, null=True, help_text="Hora (HH:MM:SS) para o comando ser enviado.")
+
+    # Para agendamentos de uma vez (data e hora específicas)
+    run_once_at = models.DateTimeField(blank=True, null=True, help_text="Data e hora para executar o comando apenas uma vez.")
+    
+    is_active = models.BooleanField(default=True, help_text="Marque para ativar o agendamento.")
+    last_triggered_at = models.DateTimeField(blank=True, null=True, help_text="Data e hora da última vez que este agendamento foi acionado.")
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = "Comando Agendado"
+        verbose_name_plural = "Comandos Agendados"
+        ordering = ['name']
+
+# Modelo auxiliar para os dias da semana
+class DayOfWeek(models.Model):
+    name = models.CharField(max_length=20, unique=True)
+    numeric_value = models.IntegerField(unique=True, choices=ScheduledCommand.DAY_CHOICES)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Dia da Semana"
+        verbose_name_plural = "Dias da Semana"
+        ordering = ['numeric_value']
