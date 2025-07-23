@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework', 
+    'rest_framework.authtoken',
     'devices', 
     'django_celery_beat', # <<< ADICIONE ESTA LINHA
     # 'django_celery_results', # Opcional: Para armazenar resultados de tarefas no DB
@@ -126,6 +127,17 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication', # Habilita autenticação por Token
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated', # Apenas usuários autenticados podem acessar
+        # 'rest_framework.permissions.AllowAny', # Se quiser permitir acesso público em algumas APIs
+    ]
+}
+
 
 # Celery Configuration
 CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0' # URL do seu servidor Redis

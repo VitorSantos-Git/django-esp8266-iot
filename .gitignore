@@ -32,3 +32,4 @@ build/ # Pasta de build do Arduino IDE
 #sketch_frmware_esp/password_ssid.h # <--- Mude para isso se for apenas nessa pasta
 # OU para ignorar qualquer arquivo com esse nome em qualquer subpasta:
  **/password_ssid.h # <--- Mais genérico, ignora em qualquer subdiretório
+ token.key

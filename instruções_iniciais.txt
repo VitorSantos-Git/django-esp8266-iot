@@ -103,6 +103,7 @@ for name, numeric_value in days_data:
     print(f"Dia {name} ({numeric_value}) criado.")
 
 exit()
+
 Executando o Projeto
 Você precisará de três terminais separados, todos com o ambiente virtual ativado.
 

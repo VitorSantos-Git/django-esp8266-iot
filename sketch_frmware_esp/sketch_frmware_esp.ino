@@ -23,6 +23,9 @@ const char* password = txtpassword;
 const char* djangoServerBaseUrl = "http://192.168.31.80:8000/api/device/";
 const char* DEVICE_ID = "ESP8266_B001"; // O ID ÚNICO DESTE DISPOSITIVO
 
+// Substitua "SEU_TOKEN_GERADO_AQUI" pelo token real do seu usuário/dispositivo!
+const char* AUTH_TOKEN = txtToken;
+
 // --- Variáveis para controle do dispositivo (exemplo) ---
 int temperature = 0;
 int humidity = 0;
@@ -46,6 +49,13 @@ void connectWiFi() {
   Serial.println(WiFi.localIP());
 }
 
+// --- Função auxiliar para adicionar o cabeçalho de autenticação ---
+void addAuthHeader(HTTPClient& http) {
+  String authHeader = "Token ";
+  authHeader += AUTH_TOKEN;
+  http.addHeader("Authorization", authHeader);
+}
+
 // --- Função para enviar dados ao Django ---
 void sendDataToDjango() {
   if (WiFi.status() == WL_CONNECTED) {
@@ -55,6 +65,7 @@ void sendDataToDjango() {
     String postUrl = String(djangoServerBaseUrl);
     http.begin(client, postUrl);
     http.addHeader("Content-Type", "application/json");
+    addAuthHeader(http);
 
     // Cria um objeto JSON para enviar os dados
     // Aumentei o tamanho do buffer JSON para 500 para dados genéricos futuros
@@ -107,9 +118,11 @@ void sendCommandExecutedConfirmation(const char* executedCommand, const char* ta
         String putUrl = String(djangoServerBaseUrl) + String(DEVICE_ID) + "/";
         http.begin(client, putUrl);
         http.addHeader("Content-Type", "application/json");
+        addAuthHeader(http);
 
         StaticJsonDocument<200> doc; // Buffer menor, pois só enviamos 2 campos
         doc["last_command"] = executedCommand;
+        doc["pending_command"] = nullptr; // ZERA O CAMPO PENDING_COMMAND APÓS A EXECUÇÃO
         
         // Formata a data/hora atual no formato ISO 8601 esperado pelo Django
         // Ex: "2025-07-22T17:30:00.000Z"
@@ -164,6 +177,7 @@ void receiveCommandsFromDjango() {
       // Constrói a URL para GET (adiciona o device_id ao final)
       String getUrl = String(djangoServerBaseUrl) + String(DEVICE_ID) + "/";
       http.begin(client, getUrl);
+      addAuthHeader(http);
       
       Serial.print("Verificando por comandos em: ");
       Serial.println(getUrl);
@@ -187,49 +201,53 @@ void receiveCommandsFromDjango() {
           return;
         }
 
-        const char* status = doc["status"];
+        const char* status = doc["status"]; // Obtém o status da resposta
 
-        if (strcmp(status, "command_pending") == 0) {
+        if (strcmp(status, "command_pending") == 0) { 
           // Comando pendente encontrado!
           Serial.println("COMANDO PENDENTE RECEBIDO!");
-          JsonObject command = doc["command"]; // O objeto JSON do comando
+          if (doc.containsKey("command") && !doc["command"].isNull()) {  
+            JsonObject command =  doc["command"]; // Pega o objeto pending_command do JSON
 
-          const char* action = command["action"];
-          const char* target = command["target"];
-          int value = command["value"] | 0; // Valor padrão 0 se não existir
+            const char* action = command["action"];
+            const char* target = command["target"];
+            int value = command["value"] | 0; // Valor padrão 0 se não existir
 
-          Serial.print("Ação: "); Serial.println(action);
-          Serial.print("Alvo: "); Serial.println(target);
-          Serial.print("Valor: "); Serial.println(value);
+            Serial.print("Ação: "); Serial.println(action);
+            Serial.print("Alvo: "); Serial.println(target);
+            Serial.print("Valor: "); Serial.println(value);
 
-          // --- LÓGICA PARA EXECUTAR O COMANDO E ATUALIZAR O ESTADO INTERNO ---
-          // Aqui iremos adicionar os código para controlar o hardware
-          if (strcmp(action, "ligar_rele") == 0 && strcmp(target, "rele_D1") == 0) {
-              relayState = true;
-              Serial.println("Rele D1 LIGADO!");
-              sendCommandExecutedConfirmation("ligar_rele", "rele_D1"); // Confirmar execução
-          } else if (strcmp(action, "desligar_rele") == 0 && strcmp(target, "rele_D1") == 0) {
-              relayState = false;
-              Serial.println("Rele D1 DESLIGADO!");
-              sendCommandExecutedConfirmation("desligar_rele", "rele_D1");
-          } 
-          // Adicione mais blocos 'else if' para outros comandos:
-          //exemplo
-          // else if (strcmp(action, "tocar_musica") == 0) {
-          //     // Lógica para tocar música
-          // }
-          // else if (strcmp(action, "emitir_ir") == 0) {
-          //     // Lógica para emitir sinal IR
-          // }
-          // ... etc.
+            // --- LÓGICA PARA EXECUTAR O COMANDO E ATUALIZAR O ESTADO INTERNO ---
+            // Aqui iremos adicionar os código para controlar o hardware
+            if (strcmp(action, "ligar_rele") == 0 && strcmp(target, "rele_D1") == 0) {
+                relayState = true;
+                Serial.println("Rele D1 LIGADO!");
+                sendCommandExecutedConfirmation("ligar_rele", "rele_D1"); // Confirmar execução
+            } else if (strcmp(action, "desligar_rele") == 0 && strcmp(target, "rele_D1") == 0) {
+                relayState = false;
+                Serial.println("Rele D1 DESLIGADO!");
+                sendCommandExecutedConfirmation("desligar_rele", "rele_D1");
+            } 
+            // Adicione mais blocos 'else if' para outros comandos:
+            //exemplo
+            // else if (strcmp(action, "tocar_musica") == 0) {
+            //     // Lógica para tocar música
+            // }
+            // else if (strcmp(action, "emitir_ir") == 0) {
+            //     // Lógica para emitir sinal IR
+            // }
+            // ... etc.
 
-          // --- ATUALIZAR Os PINOs IMEDIATAMENTE APÓS RECEBER O COMANDO ---
-          update_saida(); // Garante que a saída é atualizada na hora!
+            // --- ATUALIZAR Os PINOs IMEDIATAMENTE APÓS RECEBER O COMANDO ---
+            update_saida(); // Garante que a saída é atualizada na hora!
+          }else {
+             Serial.println("Status 'command_pending' mas objeto 'command' não encontrado ou nulo.");
+          }
         } else if (strcmp(status, "no_command") == 0) {
           Serial.println("Nenhum comando pendente.");
-        } else {
-          Serial.print("Status de resposta desconhecido: ");
-          Serial.println(status);
+         } else {
+           Serial.print("Status de resposta desconhecido: ");
+           Serial.println(status);
         }
       } else {
         Serial.print("Error code (GET): ");
