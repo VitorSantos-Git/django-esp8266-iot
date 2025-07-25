@@ -8,7 +8,7 @@
 //const char* ssid = "casa";       // Seu nome de rede Wi-Fi
 //const char* password = "pudim638";  // Sua senha do Wi-Fi
 
-#define txtToken "7f4a51086411bd103acaddfe1876567774a5bf50"
+#define txtToken "d1843434255910f2cdf4f8ea880e60fc0ece91c7"
 
 #define txtssid "casa"
 #define txtpassword "pudim638"

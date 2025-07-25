@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,6 +34,7 @@ ALLOWED_HOSTS = ['192.168.31.80', 'localhost', '127.0.0.1', '*']
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin', 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,7 +44,7 @@ INSTALLED_APPS = [
     'rest_framework', 
     'rest_framework.authtoken',
     'devices', 
-    'django_celery_beat', # <<< ADICIONE ESTA LINHA
+    #'django_celery_beat', # <<< ADICIONE ESTA LINHA
     # 'django_celery_results', # Opcional: Para armazenar resultados de tarefas no DB
 ]
 
@@ -68,6 +70,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n',
             ],
         },
     },
@@ -115,7 +118,13 @@ TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 
+USE_L10N = True
+
 USE_TZ = True
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale', 
+]
 
 
 # Static files (CSS, JavaScript, Images)
@@ -165,5 +174,86 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': 60.0, # Executa a cada 60 segundos (1 minuto)
         'args': (),
     },
+}
+
+
+# settings.py
+
+JAZZMIN_SETTINGS = {
+    # Título do cabeçalho da página admin
+    "site_header": "Controle IOT",
+
+    # Título da aba do navegador
+    "site_brand": "Controle dos IOT",
+
+    # Logo no cabeçalho (pode ser um caminho para um arquivo estático ou URL)
+    # "site_logo": "img/logo.png", # Exemplo: se você tiver uma imagem em static/img/logo.png
+
+    # Texto de boas-vindas no canto superior direito
+    "welcome_sign": "Bem-vindo ao Painel de Controle IOT",
+
+    "site_title": "Controle IOT",  # Título na aba do navegador
+
+    # Icones Font Awesome 6 (precisa instalar 'django-jazzmin[fontawesome]')
+    # ou Font Awesome 5 (padrão)
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+        "devices.comandosagendados": "fas fa-clock", # Exemplo: ajuste para seus modelos
+        "devices.diasdasemana": "fas fa-calendar-alt",
+        "devices.dispositivos": "fas fa-microchip",
+        # Adicione ícones para outros modelos e apps conforme necessário
+    },
+    # Se você quiser usar Font Awesome 6, descomente e instale:
+    # "default_icon_parents": "fas fa-chevron-circle-right",
+    # "default_icon_children": "fas fa-circle",
+
+    # Mostrar o menu lateral minimizado por padrão
+    "navigation_expanded": True,
+
+    # Mostrar o botão "View site" no cabeçalho
+    "show_sidebar": False,
+
+    # Cores do tema (existem vários temas pré-definidos)
+    # Veja a documentação para mais opções: https://django-jazzmin.readthedocs.io/jazzmin_settings/
+    "topbar_links": [
+        {"name": "Suporte", "url": "https://github.com/farsil/django-jazzmin/issues", "new_window": True},
+    ],
+    
+    "show_ui_builder": False, # Permite personalizar o tema na interface (apenas para desenvolvimento)
+    "custom_css": None,
+}
+
+# Configurações adicionais para o UI Builder (opcional, mas útil para testar temas)
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": "navbar-dark",
+    "accent": "accent-primary",
+    "navbar": "navbar-dark navbar-primary",
+    "no_navbar_border": False,
+    "navbar_fixed": False,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": False,
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": False,
+    "theme": "darkly", # Experimente outros temas como 'flatly', 'cerulean', 'cosmo', 'journal', 'litera', 'lumen', 'lux', 'materia', 'minty', 'pulse', 'sandstone', 'simplex', 'sketchy', 'slate', 'solar', 'spacelab', 'superhero', 'united', 'yeti'
+    "dark_mode_theme": None, # Use um tema escuro específico se quiser
+    "button_classes": {
+        "primary": "btn-outline-primary",
+        "secondary": "btn-outline-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success"
+    }
 }
 

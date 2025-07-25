@@ -33,3 +33,4 @@ build/ # Pasta de build do Arduino IDE
 # OU para ignorar qualquer arquivo com esse nome em qualquer subpasta:
  **/password_ssid.h # <--- Mais genérico, ignora em qualquer subdiretório
  *token.key
+ token.key
