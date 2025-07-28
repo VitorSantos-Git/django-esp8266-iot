@@ -84,7 +84,6 @@ class Device(models.Model):
     def __str__(self):
         return f"{self.name} ({self.device_id})"
 
-
 class ScheduledCommand(models.Model):
     # Traduzindo as escolhas dos dias da semana
     DAY_CHOICES = [

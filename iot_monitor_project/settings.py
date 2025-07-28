@@ -179,81 +179,62 @@ CELERY_BEAT_SCHEDULE = {
 
 # settings.py
 
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'), # Adicione esta linha
+]
+
+
+
+
 JAZZMIN_SETTINGS = {
+
+    # "show_ui_builder": True
+    
+
     # Título do cabeçalho da página admin
-    "site_header": "Controle IOT",
+    "site_title": "IoT",  # título na aba do navegador
+    "site_header": "Controle IoT",
 
     # Título da aba do navegador
-    "site_brand": "Controle dos IOT",
+    "site_brand": "Controle dos IoT",
 
     # Logo no cabeçalho (pode ser um caminho para um arquivo estático ou URL)
-    # "site_logo": "img/logo.png", # Exemplo: se você tiver uma imagem em static/img/logo.png
+    "site_logo": "img/IFSP_CMP_transparente.png", # Exemplo: se você tiver uma imagem em static/img/logo.png
 
     # Texto de boas-vindas no canto superior direito
     "welcome_sign": "Bem-vindo ao Painel de Controle IOT",
 
-    "site_title": "Controle IOT",  # Título na aba do navegador
-
     # Icones Font Awesome 6 (precisa instalar 'django-jazzmin[fontawesome]')
-    # ou Font Awesome 5 (padrão)
     "icons": {
         "auth": "fas fa-users-cog",
         "auth.user": "fas fa-user",
         "auth.Group": "fas fa-users",
-        "devices.comandosagendados": "fas fa-clock", # Exemplo: ajuste para seus modelos
-        "devices.diasdasemana": "fas fa-calendar-alt",
-        "devices.dispositivos": "fas fa-microchip",
-        # Adicione ícones para outros modelos e apps conforme necessário
+        "devices.ScheduledCommand": "fas fa-clock", # Exemplo: ajuste para seus modelos
+        "devices.DayOfWeek": "fas fa-calendar-alt",
+        "devices.Device": "fas fa-microchip",
+        # Adicione ícones para outros modelos e apps conforme necessário fa-square-binary
     },
-    # Se você quiser usar Font Awesome 6, descomente e instale:
-    # "default_icon_parents": "fas fa-chevron-circle-right",
-    # "default_icon_children": "fas fa-circle",
 
     # Mostrar o menu lateral minimizado por padrão
-    "navigation_expanded": True,
+    # "navigation_expanded": True,
 
     # Mostrar o botão "View site" no cabeçalho
     "show_sidebar": False,
 
+    # Alterar modelos de formulário
+    "changeform_format": "single",
+
     # Cores do tema (existem vários temas pré-definidos)
     # Veja a documentação para mais opções: https://django-jazzmin.readthedocs.io/jazzmin_settings/
-    "topbar_links": [
-        {"name": "Suporte", "url": "https://github.com/farsil/django-jazzmin/issues", "new_window": True},
-    ],
+    # "topbar_links": [
+    #     {"name": "Suporte", "url": "https://github.com/farsil/django-jazzmin/issues", "new_window": True},
+    # ],
     
-    "show_ui_builder": False, # Permite personalizar o tema na interface (apenas para desenvolvimento)
-    "custom_css": None,
+    # "show_ui_builder": True, # Permite personalizar o tema na interface (apenas para desenvolvimento)
+    # "custom_css": None,
 }
 
-# Configurações adicionais para o UI Builder (opcional, mas útil para testar temas)
-JAZZMIN_UI_TWEAKS = {
-    "navbar_small_text": False,
-    "footer_small_text": False,
-    "body_small_text": False,
-    "brand_small_text": False,
-    "brand_colour": "navbar-dark",
-    "accent": "accent-primary",
-    "navbar": "navbar-dark navbar-primary",
-    "no_navbar_border": False,
-    "navbar_fixed": False,
-    "layout_boxed": False,
-    "footer_fixed": False,
-    "sidebar_fixed": False,
-    "sidebar_nav_small_text": False,
-    "sidebar_disable_expand": False,
-    "sidebar_nav_child_indent": False,
-    "sidebar_nav_compact_style": False,
-    "sidebar_nav_legacy_style": False,
-    "sidebar_nav_flat_style": False,
-    "theme": "darkly", # Experimente outros temas como 'flatly', 'cerulean', 'cosmo', 'journal', 'litera', 'lumen', 'lux', 'materia', 'minty', 'pulse', 'sandstone', 'simplex', 'sketchy', 'slate', 'solar', 'spacelab', 'superhero', 'united', 'yeti'
-    "dark_mode_theme": None, # Use um tema escuro específico se quiser
-    "button_classes": {
-        "primary": "btn-outline-primary",
-        "secondary": "btn-outline-secondary",
-        "info": "btn-info",
-        "warning": "btn-warning",
-        "danger": "btn-danger",
-        "success": "btn-success"
-    }
-}
 

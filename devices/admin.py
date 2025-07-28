@@ -4,6 +4,11 @@ from django.contrib import admin
 from .models import Device, ScheduledCommand, DayOfWeek
 from django.utils.translation import gettext_lazy as _
 
+# admin.site.site_header = "Controle do Sistema IoT" # Mesma mensagem do site_header do Jazzmin
+# admin.site.site_title = "Controle IoT" # Mesma mensagem do site_title do Jazzmin
+admin.site.index_title = "Painel" # Mensagem que aparece antes dos apps
+
+
 class DeviceAdmin(admin.ModelAdmin):
     list_display = (
         'name',
