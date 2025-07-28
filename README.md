@@ -80,37 +80,42 @@ O Redis será usado como broker de mensagens para o Celery.
 
 Navegue até o diretório onde deseja armazenar o projeto e clone o repositório:
 
-    bash
+    Bash
     git clone <URL_DO_SEU_REPOSITORIO>
     cd IOT_Controle # Ou o nome da sua pasta raiz do projeto
     Configurar Ambiente Virtual Python
-    É altamente recomendado usar um ambiente virtual para isolar as dependências do projeto.
+
+É altamente recomendado usar um ambiente virtual para isolar as dependências do projeto.
 
     Bash
 
     python -m venv venv
     No Windows (PowerShell/CMD):
 
+Ativar o ambiente virtual
     Bash
 
     .\venv\Scripts\activate
     No Linux/WSL/macOS (Bash/Zsh):
 
+Ativar o ambiente virtual
     Bash
 
     source venv/bin/activate
     Instalar Dependências
-    Com o ambiente virtual ativado, instale todas as bibliotecas necessárias usando o requirements.txt. Certifique-se de que este arquivo foi gerado corretamente (ex: pip freeze > requirements.txt).
+
+Com o ambiente virtual ativado, instale todas as bibliotecas necessárias usando o requirements.txt. Certifique-se de que este arquivo foi gerado corretamente (ex: pip freeze > requirements.txt).
 
     Bash
 
     pip install -r requirements.txt
     Configurações do Django
-    Ajuste as configurações básicas do projeto no arquivo iot_monitor_project/settings.py.
 
-    Chave Secreta (SECRET_KEY): Para fins de desenvolvimento, a chave existente pode ser usada. Para ambientes de produção, é imperativo gerar uma nova chave forte e gerenciá-la como uma variável de ambiente, nunca hardcoded no código.
+Ajuste as configurações básicas do projeto no arquivo iot_monitor_project/settings.py.
 
-    Exemplo de geração de uma nova chave (no shell Python):
+Chave Secreta (SECRET_KEY): Para fins de desenvolvimento, a chave existente pode ser usada. Para ambientes de produção, é imperativo gerar uma nova chave forte e gerenciá-la como uma variável de ambiente, nunca hardcoded no código.
+
+Exemplo de geração de uma nova chave (no shell Python):
 
     Python
 
@@ -118,14 +123,14 @@ Navegue até o diretório onde deseja armazenar o projeto e clone o repositório
     print(get_random_secret_key())
     Hosts Permitidos (ALLOWED_HOSTS): Esta configuração define quais nomes de host o seu Django pode servir.
 
-    Para desenvolvimento local, você pode usar:
+Para desenvolvimento local, você pode usar:
 
     Python
 
     ALLOWED_HOSTS = ['192.168.31.80', 'localhost', '127.0.0.1']
     Atenção: Em produção, NUNCA use ALLOWED_HOSTS = ['*'] pois isso é uma falha de segurança grave. Liste explicitamente os domínios e IPs do seu servidor.
 
-    Configuração do Celery e Redis: O Celery usa o Redis como um "broker" de mensagens. Verifique as URLs configuradas no seu settings.py.
+Configuração do Celery e Redis: O Celery usa o Redis como um "broker" de mensagens. Verifique as URLs configuradas no seu settings.py.
 
     Python
 
@@ -133,27 +138,30 @@ Navegue até o diretório onde deseja armazenar o projeto e clone o repositório
     CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0' # Onde os resultados das tarefas são armazenados
     Certifique-se de que o Redis esteja rodando e acessível na porta 6379.
 
-    Migrações do Banco de Dados
-    Aplique as migrações para criar as tabelas necessárias no banco de dados (SQLite por padrão neste projeto):
+Migrações do Banco de Dados
+Aplique as migrações para criar as tabelas necessárias no banco de dados (SQLite por padrão neste projeto):
 
     Bash
 
     python manage.py migrate
-    Criação de Superusuário
-    Crie um usuário administrador para acessar o painel de administração do Django (/admin/):
+    
+Criação de Superusuário
+Crie um usuário administrador para acessar o painel de administração do Django (/admin/):
 
     Bash
 
     python manage.py createsuperuser
-    Siga as instruções no terminal para definir o nome de usuário, endereço de e-mail e senha.
 
-    População de Dados Iniciais (Dias da Semana)
-    O aplicativo devices utiliza o modelo DayOfWeek para representar os dias da semana em agendamentos. Para garantir que estes dados básicos estejam presentes, você pode populá-los via Django Shell:
+Siga as instruções no terminal para definir o nome de usuário, endereço de e-mail e senha.
+
+População de Dados Iniciais (Dias da Semana)
+O aplicativo devices utiliza o modelo DayOfWeek para representar os dias da semana em agendamentos. Para garantir que estes dados básicos estejam presentes, você pode populá-los via Django Shell:
 
     Bash
 
     python manage.py shell
-    Dentro do shell Python, cole e execute os seguintes comandos:
+
+Dentro do shell Python, cole e execute os seguintes comandos:
 
     Python
 
