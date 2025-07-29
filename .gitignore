@@ -31,3 +31,11 @@ build/ # Pasta de build do Arduino IDE
 
 # Arquivos de configurações sensíveis
 **/password_ssid.h # <--- Mais genérico, ignora em qualquer subdiretório
+
+# Celery Beat Schedule Files
+celerybeat-schedule
+celerybeat-schedule.bak
+celerybeat-schedule.dat
+celerybeat-schedule.dir
+celerybeat-schedule-shm
+celerybeat-schedule-wal
