@@ -23,7 +23,7 @@ No segundo terminal:
     Bash
 
     celery -A iot_monitor_project worker -l info --pool=solo
-    
+
 Nota: O --pool=solo é crucial para ambientes Windows para evitar PermissionError. Em ambientes Linux/produção, você pode omitir ou usar prefork.
 
 Iniciar o Celery Beat
@@ -50,4 +50,3 @@ feat: é um prefixo comum para indicar que é uma nova funcionalidade (feature).
 fix: para correção de bugs.
 docs: para documentação, etc.
 
-"""

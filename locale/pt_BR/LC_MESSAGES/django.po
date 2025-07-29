@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: IOT_Controle\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-25 00:04-0300\n"
+"POT-Creation-Date: 2025-07-28 22:44-0300\n"
 "PO-Revision-Date: 2025-07-25 00:00-0300\n"
 "Last-Translator: Seu Nome <seu.email@exemplo.com>\n"
 "Language-Team: Portuguese (Brazil) <pt_BR@li.org>\n"
@@ -18,23 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: .\devices\admin.py:33 .\devices\models.py:41
-msgid "Online"
-msgstr "Online"
-
-#: .\devices\admin.py:36
-msgid "Último Comando"
-msgstr "Último Comando"
-
-#: .\devices\admin.py:37 .\devices\models.py:62
-msgid "Executado Em"
-msgstr "Executado Em"
-
-#: .\devices\admin.py:87
+#: .\devices\admin.py:74
 msgid "Detalhes do Agendamento"
 msgstr "Detalhes do Agendamento"
 
-#: .\devices\admin.py:89
+#: .\devices\admin.py:76
 msgid ""
 "Configure o tipo e os detalhes do agendamento. Preencha apenas os campos "
 "relevantes para o tipo selecionado."
@@ -42,9 +30,13 @@ msgstr ""
 "Configure o tipo e os detalhes do agendamento. Preencha apenas os campos "
 "relevantes para o tipo selecionado."
 
-#: .\devices\admin.py:91
+#: .\devices\admin.py:78
 msgid "Informações de Status"
 msgstr "Informações de Status"
+
+#: .\devices\apps.py:9 .\devices\models.py:81 .\devices\models.py:102
+msgid "Dispositivos"
+msgstr "Dispositivos"
 
 #: .\devices\models.py:11
 msgid "ID do Dispositivo"
@@ -86,6 +78,10 @@ msgstr "Última Conexão"
 msgid "Data e hora da última comunicação do dispositivo"
 msgstr "Data e hora da última comunicação do dispositivo"
 
+#: .\devices\models.py:41
+msgid "Online"
+msgstr "Online"
+
 #: .\devices\models.py:42
 msgid "Indica se o dispositivo está online"
 msgstr "Indica se o dispositivo está online"
@@ -105,6 +101,10 @@ msgstr "Último Comando Executado"
 #: .\devices\models.py:57
 msgid "O último comando que o dispositivo executou."
 msgstr "O último comando que o dispositivo executou."
+
+#: .\devices\models.py:62
+msgid "Executado Em"
+msgstr "Executado Em"
 
 #: .\devices\models.py:63
 msgid "Data e hora em que o último comando foi executado pelo dispositivo."
@@ -134,55 +134,51 @@ msgstr "Data e hora de criação do registro do dispositivo"
 msgid "Dispositivo"
 msgstr "Dispositivo"
 
-#: .\devices\models.py:81 .\devices\models.py:103
-msgid "Dispositivos"
-msgstr "Dispositivos"
-
-#: .\devices\models.py:91 .\venv\Lib\site-packages\django\utils\dates.py:13
+#: .\devices\models.py:90 .\venv\Lib\site-packages\django\utils\dates.py:13
 msgid "Sunday"
 msgstr "Domingo"
 
-#: .\devices\models.py:92 .\venv\Lib\site-packages\django\utils\dates.py:7
+#: .\devices\models.py:91 .\venv\Lib\site-packages\django\utils\dates.py:7
 msgid "Monday"
 msgstr "Segunda-feira"
 
-#: .\devices\models.py:93 .\venv\Lib\site-packages\django\utils\dates.py:8
+#: .\devices\models.py:92 .\venv\Lib\site-packages\django\utils\dates.py:8
 msgid "Tuesday"
 msgstr "Terça-feira"
 
-#: .\devices\models.py:94 .\venv\Lib\site-packages\django\utils\dates.py:9
+#: .\devices\models.py:93 .\venv\Lib\site-packages\django\utils\dates.py:9
 msgid "Wednesday"
 msgstr "Quarta-feira"
 
-#: .\devices\models.py:95 .\venv\Lib\site-packages\django\utils\dates.py:10
+#: .\devices\models.py:94 .\venv\Lib\site-packages\django\utils\dates.py:10
 msgid "Thursday"
 msgstr "Quinta-feira"
 
-#: .\devices\models.py:96 .\venv\Lib\site-packages\django\utils\dates.py:11
+#: .\devices\models.py:95 .\venv\Lib\site-packages\django\utils\dates.py:11
 msgid "Friday"
 msgstr "Sexta-feira"
 
-#: .\devices\models.py:97 .\venv\Lib\site-packages\django\utils\dates.py:12
+#: .\devices\models.py:96 .\venv\Lib\site-packages\django\utils\dates.py:12
 msgid "Saturday"
 msgstr "Sábado"
 
-#: .\devices\models.py:100
+#: .\devices\models.py:99
 msgid "Nome do Comando"
 msgstr "Nome do Comando"
 
-#: .\devices\models.py:100
+#: .\devices\models.py:99
 msgid "Nome descritivo para o agendamento (ex: Ligar Luz da Sala)"
 msgstr "Nome descritivo para o agendamento (ex: Ligar Luz da Sala)"
 
-#: .\devices\models.py:104
+#: .\devices\models.py:103
 msgid "Selecione os dispositivos que receberão este comando."
 msgstr "Selecione os dispositivos que receberão este comando."
 
-#: .\devices\models.py:107
+#: .\devices\models.py:106
 msgid "Comando JSON"
 msgstr "Comando JSON"
 
-#: .\devices\models.py:108
+#: .\devices\models.py:107
 msgid ""
 "Comando a ser enviado no formato JSON (ex: {\"action\": \"ligar_rele\", "
 "\"target\": \"rele_D1\", \"value\": 1})"
@@ -190,23 +186,23 @@ msgstr ""
 "Comando a ser enviado no formato JSON (ex: {\"action\": \"ligar_rele\", "
 "\"target\": \"rele_D1\", \"value\": 1})"
 
-#: .\devices\models.py:114
+#: .\devices\models.py:113
 msgid "Daily"
 msgstr "Diário"
 
-#: .\devices\models.py:115
+#: .\devices\models.py:114
 msgid "Weekly"
 msgstr "Semanal"
 
-#: .\devices\models.py:116
+#: .\devices\models.py:115
 msgid "Once"
 msgstr "Uma Vez"
 
-#: .\devices\models.py:119
+#: .\devices\models.py:118
 msgid "Tipo de Agendamento"
 msgstr "Tipo de Agendamento"
 
-#: .\devices\models.py:120
+#: .\devices\models.py:119
 msgid ""
 "Tipo de agendamento: Diário (todos os dias), Semanal (dias específicos), Uma "
 "Vez (data e hora únicas)."
@@ -214,63 +210,63 @@ msgstr ""
 "Tipo de agendamento: Diário (todos os dias), Semanal (dias específicos), Uma "
 "Vez (data e hora únicas)."
 
-#: .\devices\models.py:126 .\devices\models.py:153
+#: .\devices\models.py:125 .\devices\models.py:152
 msgid "Dia da Semana"
 msgstr "Dia da Semana"
 
-#: .\devices\models.py:127
+#: .\devices\models.py:126
 msgid "Selecione os dias da semana para agendamentos semanais."
 msgstr "Selecione os dias da semana para agendamentos semanais."
 
-#: .\devices\models.py:130
+#: .\devices\models.py:129
 msgid "Hora do Dia"
 msgstr ""
 
-#: .\devices\models.py:130
+#: .\devices\models.py:129
 msgid "Hora (HH:MM:SS) para o comando ser enviado."
 msgstr "Hora (HH:MM:SS) para o comando ser enviado."
 
-#: .\devices\models.py:132
+#: .\devices\models.py:131
 msgid "Executar Uma Vez Em"
 msgstr "Executar Uma Vez Em"
 
-#: .\devices\models.py:132
+#: .\devices\models.py:131
 msgid "Data e hora para executar o comando apenas uma vez."
 msgstr "Data e hora para executar o comando apenas uma vez."
 
-#: .\devices\models.py:134
+#: .\devices\models.py:133
 msgid "Ativo"
 msgstr ""
 
-#: .\devices\models.py:134
+#: .\devices\models.py:133
 msgid "Marque para ativar o agendamento."
 msgstr "Marque para ativar o agendamento."
 
-#: .\devices\models.py:135
+#: .\devices\models.py:134
 msgid "Última Execução"
 msgstr "Última Execução"
 
-#: .\devices\models.py:135
+#: .\devices\models.py:134
 msgid "Data e hora da última vez que este agendamento foi acionado."
 msgstr "Data e hora da última vez que este agendamento foi acionado."
 
-#: .\devices\models.py:141
+#: .\devices\models.py:140
 msgid "Comando Agendado"
 msgstr "Comando Agendado"
 
-#: .\devices\models.py:142
+#: .\devices\models.py:141
 msgid "Comandos Agendados"
 msgstr "Comandos Agendados"
 
-#: .\devices\models.py:146
+#: .\devices\models.py:145
 msgid "Nome"
 msgstr ""
 
-#: .\devices\models.py:147
+#: .\devices\models.py:146
 msgid "Valor Numérico"
 msgstr ""
 
-#: .\devices\models.py:154
+#: .\devices\models.py:153
 msgid "Dias da Semana"
 msgstr "Dias da Semana"
 
@@ -1866,3 +1862,6 @@ msgstr "Não foi possível conectar ao qpid com mecanismo SASL %s"
 #: .\venv\Lib\site-packages\timezone_field\rest_framework.py:10
 msgid "A valid timezone is required."
 msgstr "Um fuso horário válido é obrigatório."
+
+#~ msgid "Último Comando"
+#~ msgstr "Último Comando"

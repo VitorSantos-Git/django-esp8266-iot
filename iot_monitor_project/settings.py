@@ -187,27 +187,118 @@ STATICFILES_DIRS = [
 ]
 
 
-
-
 JAZZMIN_SETTINGS = {
+    # --- Configurações Gerais da Interface (Global) ---
 
-    # "show_ui_builder": True
-    
+    # Título da janela do navegador (aparece na aba do navegador)
+    # Se ausente ou None, usará o site_title do admin.site do Django.
+    "site_title": "IoT",
 
-    # Título do cabeçalho da página admin
-    "site_title": "IoT",  # título na aba do navegador
+    # Título na tela de login do painel administrativo (máximo 19 caracteres)
+    # Se ausente ou None, usará o site_header do admin.site do Django.
     "site_header": "Controle IoT",
 
-    # Título da aba do navegador
-    "site_brand": "Controle dos IoT",
+    # Título da marca que aparece no canto superior esquerdo da sidebar (máximo 19 caracteres)
+    # Geralmente acompanha o site_logo.
+    "site_brand": "Controle",
 
-    # Logo no cabeçalho (pode ser um caminho para um arquivo estático ou URL)
-    "site_logo": "img/IFSP_CMP_transparente.png", # Exemplo: se você tiver uma imagem em static/img/logo.png
+    # Caminho relativo para o logo do seu site. Deve estar na pasta de arquivos estáticos.
+    # Usado como logo principal no canto superior esquerdo (próximo ao site_brand).
+    "site_logo": "img/IFSP_transparente.png",
 
-    # Texto de boas-vindas no canto superior direito
-    "welcome_sign": "Bem-vindo ao Painel de Controle IOT",
+    # Logo específico para a tela de login. Se None, usará o site_logo.
+    "login_logo": "img/CMP_transparente.png",
 
-    # Icones Font Awesome 6 (precisa instalar 'django-jazzmin[fontawesome]')
+    # Logo específico para a tela de login quando o tema escuro está ativado. Se None, usará login_logo.
+    "login_logo_dark": "img/IFSP_CMP_transparente.png",
+
+    # Classes CSS adicionais aplicadas à imagem do logo (site_logo).
+    # Ex: "img-circle" para deixá-lo circular.
+    #"site_logo_classes": None,
+
+    # Caminho relativo para um favicon (o pequeno ícone na aba do navegador).
+    # Se ausente, tentará usar o site_logo. Idealmente 32x32 pixels.
+    #"site_icon": None,
+
+    # Texto de boas-vindas exibido na tela de login.
+    "welcome_sign": "Bem-vindo ao Painel de Controle IoT",
+
+    # Texto de direitos autorais exibido no rodapé do painel administrativo.
+    "copyright": "Painel de Controle IoT - Projeto de Ensino",
+
+    # Se você quiser usar um único campo de busca, não precisa usar uma lista, pode usar uma string simples
+    # Lista de modelos (formato 'app_label.ModelName') que serão incluídos na barra de pesquisa global.
+    # Se esta configuração for omitida, a barra de pesquisa não será exibida.
+    # "search_model": ["auth.User", "auth.Group"],
+
+    # Nome do campo no seu modelo de usuário que contém a imagem/URL do avatar.
+    # Pode ser o nome de um campo ou uma função que retorna a URL do avatar do usuário.
+    "user_avatar": None,
+
+    ############
+    # Top Menu #
+    ############
+
+    # Lista de links a serem exibidos na barra superior (top menu).
+    # "topmenu_links": [
+    #     # Exemplo de link que reverte uma URL do Django (permite controle de permissões)
+    #     {"name": "Home",  "url": "admin:index", "permissions": ["auth.view_user"]},
+
+    #     # Exemplo de link externo que abre em uma nova janela (permite controle de permissões)
+    #     {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
+
+    #     # Exemplo de link para um model admin específico (permite controle de permissões)
+    #     {"model": "auth.User"},
+
+    #     # Exemplo de link para um aplicativo que exibe um menu dropdown com todos os seus modelos
+    #     {"app": "books"},
+    # ],
+
+    #############
+    # User Menu #
+    #############
+
+    # Links adicionais para incluir no menu do usuário (aquele que aparece ao clicar no nome do usuário no canto superior direito).
+    # O tipo 'app' não é permitido aqui.
+    # "usermenu_links": [
+    #     {"name": "Support", "url": "https://github.com/farridav/django-jazzmin/issues", "new_window": True},
+    #     {"model": "auth.user"} # Link para a página de detalhes do próprio usuário logado
+    # ],
+
+    #############
+    # Side Menu #
+    #############
+
+    # Booleano que controla se o menu lateral é exibido.
+    # "show_sidebar": True,
+
+    # Booleano que controla se o menu lateral deve ser expandido automaticamente por padrão.
+    # "navigation_expanded": False,
+
+    # Lista de nomes de aplicativos ('app_label') a serem ocultados do menu lateral.
+    # "hide_apps": [],
+
+    # Lista de modelos (formato 'app_label.ModelName') a serem ocultados do menu lateral.
+    # "hide_models": [],
+
+    # Lista de aplicativos e/ou modelos para definir a ordem no menu lateral.
+    # Os itens não listados aqui aparecerão após os itens especificados.
+    #"order_with_respect_to": ["auth", "books", "books.author", "books.book"],
+
+    # Links personalizados para anexar a grupos de aplicativos no menu lateral.
+    # A chave é o nome do aplicativo.
+    # "custom_links": {
+    #     "books": [{ # Para o aplicativo 'books'
+    #         "name": "Make Messages", # Nome do link
+    #         "url": "make_messages", # URL customizada (precisa ser configurada no urls.py do Django)
+    #         "icon": "fas fa-comments", # Ícone Font Awesome para o link
+    #         "permissions": ["books.view_book"] # Permissão necessária para ver o link
+    #     }]
+    # },
+
+    # Custom icons for side menu apps/models See https://fontawesome.com/icons?d=gallery&m=free&v=5.0.0,5.0.1,5.0.10,5.0.11,5.0.12,5.0.13,5.0.2,5.0.3,5.0.4,5.0.5,5.0.6,5.0.7,5.0.8,5.0.9,5.1.0,5.1.1,5.2.0,5.3.0,5.3.1,5.4.0,5.4.1,5.4.2,5.13.0,5.12.0,5.11.2,5.11.1,5.10.0,5.9.0,5.8.2,5.8.1,5.7.2,5.7.1,5.7.0,5.6.3,5.5.0,5.4.2
+    # for the full list of 5.13.0 free icon classes
+    # Dicionário para definir ícones Font Awesome personalizados para aplicativos e modelos no menu lateral.
     "icons": {
         "auth": "fas fa-users-cog",
         "auth.user": "fas fa-user",
@@ -218,23 +309,83 @@ JAZZMIN_SETTINGS = {
         # Adicione ícones para outros modelos e apps conforme necessário fa-square-binary
     },
 
-    # Mostrar o menu lateral minimizado por padrão
-    # "navigation_expanded": True,
+    # Ícones padrão usados quando nenhum ícone é especificado manualmente para um item do menu.
+    # "default_icon_parents": "fas fa-chevron-circle-right", # Ícone para pais/grupos de aplicativos
+    # "default_icon_children": "fas fa-circle", # Ícone para filhos/modelos
 
-    # Mostrar o botão "View site" no cabeçalho
-    "show_sidebar": False,
+    #################
+    # Related Modal #
+    #################
+    # Use modals instead of popups
+    # Booleano para usar modais (janelas pop-up dentro da página) em vez de novas janelas pop-up do navegador
+    # ao adicionar ou editar itens relacionados (ex: adicionar um autor ao criar um livro).
+    # "related_modal_active": False,
 
-    # Alterar modelos de formulário
+    #############
+    # UI Tweaks #
+    #############
+    # Caminhos relativos para arquivos CSS e JavaScript personalizados. Devem estar na pasta static.
+    "custom_css": "css/custom_admin.css",
+    "custom_js": None,
+
+    # Booleano para incluir fontes do Google Fonts CDN. Se False, você precisa fornecer as fontes via custom_css.
+    "use_google_fonts_cdn": True,
+
+    # Booleano para exibir o construtor de UI (personalizador de tema) na barra lateral.
+    # Recomendado ser False em produção.
+    "show_ui_builder": False,
+   
+    ###############
+    # Change view #
+    ###############
+    # Render out the change view as a single form, or in tabs, current options are
+    # - single
+    # - horizontal_tabs (default)
+    # - vertical_tabs
+    # - collapsible
+    # - carousel
+    # Formato de renderização da página de alteração de modelo (editar/adicionar).
+    # Opções: "single" (tudo em uma tela), "horizontal_tabs" (abas na horizontal),
+    # "vertical_tabs" (abas na vertical), "collapsible" (seções recolhíveis), "carousel".
     "changeform_format": "single",
 
-    # Cores do tema (existem vários temas pré-definidos)
-    # Veja a documentação para mais opções: https://django-jazzmin.readthedocs.io/jazzmin_settings/
-    # "topbar_links": [
-    #     {"name": "Suporte", "url": "https://github.com/farsil/django-jazzmin/issues", "new_window": True},
-    # ],
-    
-    # "show_ui_builder": True, # Permite personalizar o tema na interface (apenas para desenvolvimento)
-    # "custom_css": None,
+    # override change forms on a per modeladmin basis
+    # Dicionário para sobrescrever o formato do formulário de alteração para modelos específicos.
+    # A chave é 'app_label.ModelName'.
+    # "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
+
+    # Booleano para adicionar um seletor de idioma (dropdown) no painel administrativo.
+    # "language_chooser": True,
 }
 
-
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": False,
+    "accent": "accent-primary",
+    "navbar": "navbar-white navbar-light",
+    "no_navbar_border": False,
+    "navbar_fixed": False,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": False,
+    "sidebar": "sidebar-dark-primary",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": False,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": False,
+    "theme": "cosmo",
+    "dark_mode_theme": None,
+    "button_classes": {
+        "primary": "btn-outline-primary",
+        "secondary": "btn-outline-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success"
+    }
+}

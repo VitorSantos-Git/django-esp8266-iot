@@ -1,0 +1,12 @@
+/* IOT_Controle/static/css/custom_admin.css */
+
+/* Esconde o div que contém a versão do Jazzmin */
+.main-footer .float-right.d-none.d-sm-inline {
+    display: none !important; /* Use !important para garantir que sobrescreva outras regras */
+}
+
+
+/* Esconde o parágrafo "Thanks for spending..." na página de login/logout */
+.login-box-msg + .text-center {
+    display: none !important;
+}
