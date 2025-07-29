@@ -5,6 +5,7 @@ from django.utils import timezone
 from .models import Device, ScheduledCommand, DayOfWeek
 import json
 import logging
+from datetime import timedelta
 
 logger = logging.getLogger(__name__)
 
@@ -118,3 +119,23 @@ def check_and_dispatch_scheduled_commands():
         command.save(update_fields=['last_triggered_at', 'is_active'])
 
     logger.info("Verificação de comandos agendados concluída.")
+
+
+@shared_task
+def check_device_status():
+    """
+    Verifica o status dos dispositivos e os marca como offline
+    se não houver comunicação nos últimos minutos.
+    """
+    timeout_minutes = 2 # Defina o tempo limite para inatividade (ex: 5 minutos)
+    cutoff_time = timezone.now() - timedelta(minutes=timeout_minutes)
+
+    # Encontra dispositivos que estão online mas não se comunicaram desde o cutoff_time
+    # E atualiza eles para offline
+    offline_devices_count = Device.objects.filter(
+        is_online=True,
+        last_seen__lt=cutoff_time # Usa 'last_seen' para a última comunicação
+    ).update(is_online=False)
+
+    logger.info(f"[{timezone.now()}] Verificação de status de dispositivos concluída. {offline_devices_count} dispositivos marcados como offline.")
+                

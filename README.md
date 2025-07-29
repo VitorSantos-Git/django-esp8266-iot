@@ -90,18 +90,21 @@ Navegue até o diretório onde deseja armazenar o projeto e clone o repositório
     Bash
 
     python -m venv venv
+    
     No Windows (PowerShell/CMD):
 
 Ativar o ambiente virtual
     Bash
 
     .\venv\Scripts\activate
+    
     No Linux/WSL/macOS (Bash/Zsh):
 
 Ativar o ambiente virtual
     Bash
 
     source venv/bin/activate
+    
     Instalar Dependências
 
 Com o ambiente virtual ativado, instale todas as bibliotecas necessárias usando o requirements.txt. Certifique-se de que este arquivo foi gerado corretamente (ex: pip freeze > requirements.txt).

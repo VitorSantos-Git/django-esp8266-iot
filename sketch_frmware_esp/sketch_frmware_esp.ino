@@ -21,7 +21,7 @@ const char* password = txtpassword;
 // --- Configurações do Servidor Django (AGORA COM SEU IP E A URL DA API) ---
 // MUDAR 'SEU_IP_DO_SERVIDOR_DJANGO' PARA O IP REAL DO SEU COMPUTADOR (ex: 192.168.1.100)
 const char* djangoServerBaseUrl = "http://192.168.31.80:8000/api/device/";
-const char* DEVICE_ID = "ESP8266_B001"; // O ID ÚNICO DESTE DISPOSITIVO
+const char* DEVICE_ID = "ESP8266_002"; // O ID ÚNICO DESTE DISPOSITIVO
 
 // Substitua "SEU_TOKEN_GERADO_AQUI" pelo token real do seu usuário/dispositivo!
 const char* AUTH_TOKEN = txtToken;
@@ -72,9 +72,9 @@ void sendDataToDjango() {
     StaticJsonDocument<500> doc;
     // O device_id deve ser ÚNICO para cada ESP. Mude se for gravar em outro ESP!
     doc["device_id"] = DEVICE_ID;
-    doc["name"] = "Sensor de Teste - Sala"; // Nome amigável inicial
-    doc["device_type"] = "Temperatura e Umidade"; // Tipo do dispositivo
-    doc["location"] = "Sala de Estar"; // Localização do dispositivo
+    doc["name"] = "IoT-Sala"; // Nome amigável inicial
+    doc["device_type"] = "Sala de Aula"; // Tipo do dispositivo
+    doc["location"] = "SalaXXXX"; // Localização do dispositivo
 
     // Dados específicos do sensor dentro de um objeto 'data'
     JsonObject data_obj = doc.createNestedObject("data");

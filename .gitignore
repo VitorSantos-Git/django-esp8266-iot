@@ -25,7 +25,7 @@ local_settings.py # Se você tiver um arquivo de configurações locais separado
 *.lst
 *.map
 *.h
-**.h
+#**.h
 .vscode/ # Se usa VS Code para Arduino
 build/ # Pasta de build do Arduino IDE
 
