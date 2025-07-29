@@ -254,38 +254,39 @@ O painel de administração do Django oferece uma interface para gerenciar os co
 
 A estrutura do projeto segue as convenções padrão do Django, com a adição de configurações para Celery e Redis. 
 
-IOT_Controle/
-├── iot_monitor_project/        # Diretório principal do projeto Django
-│   ├── init.py
-│   ├── asgi.py
-│   ├── settings.py             # Configurações gerais do Django e Celery/Redis
-│   ├── urls.py                 # URLs globais do projeto
-│   └── wsgi.py
-├── devices/                    # Aplicativo Django para gerenciamento de dispositivos IoT
-│   ├── migrations/             # Migrações do banco de dados
-│   ├── init.py             # Configurações do AppConfig (verbose_name)
-│   ├── admin.py                # Configurações do painel administrativo (Django Admin/Jazzmin)
-│   ├── apps.py                 # Configuração do aplicativo (verbose_name)
-│   ├── models.py               # Definição dos modelos de dados (Dispositivo, ComandoAgendado, etc.)
-│   ├── serializers.py          # Serializadores para a API REST
-│   ├── tasks.py                # Tarefas do Celery
-│   ├── urls.py                 # URLs da API REST do aplicativo devices
-│   └── views.py                # Views da API REST
-├── locale/                     # Diretório para arquivos de tradução (.po, .mo)
-│   └── pt_BR/
-│       └── LC_MESSAGES/
-│           ├── django.po
-│           └── django.mo
-├── static/                     # Arquivos estáticos personalizados (imagens, CSS, JS)
-│   └── img/
-│       └── logo.png            # Exemplo de imagem de logo
-├── sketch_frmware_esp/         # Firmware de exemplo para dispositivos ESP (ESP8622 - IDE DO ARDUINO)
-│   └── password_ssid.h         # Arquivo de configuração de Wi-Fi (DEVE ser Criador e colocado na mesma pasta com as informações indicada no firmware)
-├── venv/                       # Ambiente virtual Python
-├── .gitignore                  # Arquivo para ignorar arquivos e diretórios no Git
-├── manage.py                   # Utilitário de linha de comando do Django
-└── requirements.txt            # Lista de dependências Python do projeto
-└── README.md                   # Este arquivo de documentação  
+    Bash
+    IOT_Controle/
+    ├── iot_monitor_project/        # Diretório principal do projeto Django
+    │   ├── init.py
+    │   ├── asgi.py
+    │   ├── settings.py             # Configurações gerais do Django e Celery/Redis
+    │   ├── urls.py                 # URLs globais do projeto
+    │   └── wsgi.py
+    ├── devices/                    # Aplicativo Django para gerenciamento de dispositivos IoT
+    │   ├── migrations/             # Migrações do banco de dados
+    │   ├── init.py             # Configurações do AppConfig (verbose_name)
+    │   ├── admin.py                # Configurações do painel administrativo (Django Admin/Jazzmin)
+    │   ├── apps.py                 # Configuração do aplicativo (verbose_name)
+    │   ├── models.py               # Definição dos modelos de dados (Dispositivo, ComandoAgendado, etc.)
+    │   ├── serializers.py          # Serializadores para a API REST
+    │   ├── tasks.py                # Tarefas do Celery
+    │   ├── urls.py                 # URLs da API REST do aplicativo devices
+    │   └── views.py                # Views da API REST
+    ├── locale/                     # Diretório para arquivos de tradução (.po, .mo)
+    │   └── pt_BR/
+    │       └── LC_MESSAGES/
+    │           ├── django.po
+    │           └── django.mo
+    ├── static/                     # Arquivos estáticos personalizados (imagens, CSS, JS)
+    │   └── img/
+    │       └── logo.png            # Exemplo de imagem de logo
+    ├── sketch_frmware_esp/         # Firmware de exemplo para dispositivos ESP (ESP8622 - IDE DO ARDUINO)
+    │   └── password_ssid.h         # Arquivo de configuração de Wi-Fi (DEVE ser Criador e colocado na mesma pasta com as informações indicada no firmware)
+    ├── venv/                       # Ambiente virtual Python
+    ├── .gitignore                  # Arquivo para ignorar arquivos e diretórios no Git
+    ├── manage.py                   # Utilitário de linha de comando do Django
+    └── requirements.txt            # Lista de dependências Python do projeto
+    └── README.md                   # Este arquivo de documentação  
 
 
 ## Contribuição
