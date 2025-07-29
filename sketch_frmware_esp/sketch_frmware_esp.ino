@@ -72,7 +72,7 @@ void sendDataToDjango() {
     StaticJsonDocument<500> doc;
     // O device_id deve ser ÚNICO para cada ESP. Mude se for gravar em outro ESP!
     doc["device_id"] = DEVICE_ID;
-    doc["name"] = "IoT-Sala"; // Nome amigável inicial
+    doc["name"] = WiFi.localIP().toString(); // IP
     doc["device_type"] = "Sala de Aula"; // Tipo do dispositivo
     doc["location"] = "SalaXXXX"; // Localização do dispositivo
 

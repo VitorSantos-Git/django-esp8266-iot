@@ -11,8 +11,8 @@ admin.site.index_title = "Painel" # Mensagem que aparece antes dos apps
 
 class DeviceAdmin(admin.ModelAdmin):
     list_display = (
-        'name',
         'device_id',
+        'name',
         'device_type',
         'location',
         'is_online',

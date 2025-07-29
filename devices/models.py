@@ -8,13 +8,13 @@ class Device(models.Model):
     device_id = models.CharField(
         max_length=100,
         unique=True,
-        verbose_name=_("ID do Dispositivo"), # Added verbose_name here
+        verbose_name=_("ID do Dispositivo"), 
         help_text=_("ID único do dispositivo ESP8266 (ex: ESP8266_B001)")
     )
     name = models.CharField(
         max_length=100,
-        verbose_name=_("Nome Amigável"),
-        help_text=_("Nome descritivo para o dispositivo (ex: Sensor Sala)")
+        verbose_name=_("IP do Dispositivo"),
+        help_text=_("IP do dispositivo (ex: 192.168.10.50)")
     )
     device_type = models.CharField(
         max_length=50,
@@ -79,7 +79,7 @@ class Device(models.Model):
     class Meta:
         verbose_name = _("Dispositivo")
         verbose_name_plural = _("Dispositivos")
-        ordering = ['name']
+        ordering = ['device_id']
 
     def __str__(self):
         return f"{self.name} ({self.device_id})"

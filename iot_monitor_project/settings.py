@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'devices', 
     #'celery', 
-    'django_celery_beat', 
+    #'django_celery_beat', 
     # 'django_celery_results', # Opcional: Para armazenar resultados de tarefas no DB
 ]
 
