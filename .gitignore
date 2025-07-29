@@ -24,13 +24,10 @@ local_settings.py # Se você tiver um arquivo de configurações locais separado
 *.elf
 *.lst
 *.map
+*.h
+**.h
 .vscode/ # Se usa VS Code para Arduino
 build/ # Pasta de build do Arduino IDE
 
 # Arquivos de configurações sensíveis
-# Mude para o caminho relativo ou use um padrão genérico para qualquer subpasta
-#sketch_frmware_esp/password_ssid.h # <--- Mude para isso se for apenas nessa pasta
-# OU para ignorar qualquer arquivo com esse nome em qualquer subpasta:
- **/password_ssid.h # <--- Mais genérico, ignora em qualquer subdiretório
- *token.key
- token.key
+**/password_ssid.h # <--- Mais genérico, ignora em qualquer subdiretório
