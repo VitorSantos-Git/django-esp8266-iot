@@ -3,6 +3,7 @@ from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+import json
 
 class Device(models.Model):
     device_id = models.CharField(
@@ -152,3 +153,18 @@ class DayOfWeek(models.Model):
         verbose_name = _("Dia da Semana")
         verbose_name_plural = _("Dias da Semana")
         ordering = ['numeric_value']
+
+class DeviceDataHistory(models.Model):
+    device = models.ForeignKey(Device, on_delete=models.CASCADE, related_name='history')
+    # O campo 'data' do seu JSON, agora armazenado como JSONField
+    # Isso permite armazenar temperaturas, umidades, estado de relé, etc.
+    data_payload = models.JSONField()
+    timestamp = models.DateTimeField(default=timezone.now) # Quando o dado foi recebido/registrado
+
+    def __str__(self):
+        return f"Dados de {self.device.name} em {self.timestamp.strftime('%Y-%m-%d %H:%M:%S')}"
+
+    class Meta:
+        verbose_name = "Histórico de Dados do Dispositivo"
+        verbose_name_plural = "Históricos de Dados dos Dispositivos"
+        ordering = ['-timestamp'] # Ordena os dados mais recentes primeiro

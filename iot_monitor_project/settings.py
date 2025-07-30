@@ -3,6 +3,8 @@
 from pathlib import Path
 import os
 from datetime import timedelta
+from dotenv import load_dotenv
+load_dotenv() #Variáveis de Ambiente
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -12,15 +14,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ls0!rv^(jh$o0684#x84npnak28&9_dpz5$^o)9sx#nas5r(5u'
+#SECRET_KEY = 'django-insecure-ls0!rv^(jh$o0684#x84npnak28&9_dpz5$^o)9sx#nas5r(5u'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'False').lower() == 'true'
 
 # Importante tirar o '*' após finalização !!!!!!!!!!!!!!!!
 
-ALLOWED_HOSTS = ['192.168.31.80', 'localhost', '127.0.0.1', '*']
-
+#ALLOWED_HOSTS = ['192.168.31.80', 'localhost', '127.0.0.1', '*']
+allowed_hosts_str = os.environ.get('DJANGO_ALLOWED_HOSTS', '')
+if allowed_hosts_str:
+    # Garante que cada item seja limpo de espaços em branco (strip)
+    ALLOWED_HOSTS = [h.strip() for h in allowed_hosts_str.split(',')]
+else:
+    ALLOWED_HOSTS = ['localhost']
 
 # Application definition
 
@@ -34,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework', 
     'rest_framework.authtoken',
+    'import_export',
     'devices', 
     #'celery', 
     #'django_celery_beat', 
@@ -74,13 +83,24 @@ WSGI_APPLICATION = 'iot_monitor_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+# Banco de dados PostgreSQL
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql', 
+        'NAME': os.environ.get('DB_NAME_POSTGRESQL'),
+        'USER': os.environ.get('DB_USER_POSTGRESQL'),
+        'PASSWORD': os.environ.get('PASSWORD_POSTGRESQL'),
+        'HOST': os.environ.get('LOCALHOST_POSTGRESQL'), 
+        'PORT': os.environ.get('PORT_POSTGRESQL'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -122,7 +142,7 @@ LOCALE_PATHS = [
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+#STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -179,15 +199,16 @@ CELERY_BEAT_SCHEDULE = {
 
 # settings.py
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'), # Adicione esta linha
+    os.path.join(BASE_DIR, 'static'),
 ]
 
 
 JAZZMIN_SETTINGS = {
+
     # --- Configurações Gerais da Interface (Global) ---
 
     # Título da janela do navegador (aparece na aba do navegador)
