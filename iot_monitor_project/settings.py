@@ -3,26 +3,19 @@
 from pathlib import Path
 import os
 from datetime import timedelta
-#from dotenv import load_dotenv
-#load_dotenv() #Variáveis de Ambiente
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'django-insecure-ls0!rv^(jh$o0684#x84npnak28&9_dpz5$^o)9sx#nas5r(5u'
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False').lower() == 'true'
 
-# Importante tirar o '*' após finalização !!!!!!!!!!!!!!!!
-
-#ALLOWED_HOSTS = ['192.168.31.80', 'localhost', '127.0.0.1', '*']
 allowed_hosts_str = os.environ.get('DJANGO_ALLOWED_HOSTS', '')
 if allowed_hosts_str:
     # Garante que cada item seja limpo de espaços em branco (strip)
@@ -45,12 +38,12 @@ INSTALLED_APPS = [
     'import_export',
     'devices', 
     'celery', 
-    'django_celery_beat', 
-    # 'django_celery_results', # Opcional: Para armazenar resultados de tarefas no DB
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -79,17 +72,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'iot_monitor_project.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 # Banco de dados PostgreSQL
 DATABASES = {
     'default': {
@@ -99,11 +81,11 @@ DATABASES = {
         'PASSWORD': os.environ.get('PASSWORD_POSTGRESQL'),
         'HOST': os.environ.get('LOCALHOST_POSTGRESQL'), 
         'PORT': os.environ.get('PORT_POSTGRESQL'),
+        'OPTIONS': {
+            'client_encoding': 'UTF8'
+        }
     }
 }
-
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -121,9 +103,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
-
 LANGUAGE_CODE = 'pt-br'
 
 TIME_ZONE = 'America/Sao_Paulo'
@@ -137,15 +116,6 @@ USE_TZ = True
 LOCALE_PATHS = [
     BASE_DIR / 'locale', 
 ]
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
-
-#STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -161,23 +131,14 @@ REST_FRAMEWORK = {
 
 
 # Celery Configuration
-CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0' # URL do seu servidor Redis
-CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0' # Onde os resultados das tarefas são armazenados
+REDIS_URL=os.environ.get('DJANGO_REDIS_URL')
+CELERY_BROKER_URL = os.environ.get('DJANGO_CELERY_BROKER_URL') # URL do seu servidor Redis
+CELERY_RESULT_BACKEND = os.environ.get('DJANGO_CELERY_RESULT_BACKEND') # Onde os resultados das tarefas são armazenados
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'America/Sao_Paulo' # Ou seu fuso horário local
 CELERY_ENABLE_UTC = False # Defina como False se CELERY_TIMEZONE estiver definido
-
-"""# Configurações para o Celery Beat (agendador)
-CELERY_BEAT_SCHEDULE = {
-    # Exemplo de tarefa agendada (pode ser removida depois)
-    'add-every-10-seconds': {
-        'task': 'devices.tasks.debug_task_example', # Caminho para a sua tarefa
-        'schedule': 10.0, # Executa a cada 10 segundos
-        'args': ('Hello from Celery Beat!',)
-    },
-}"""
 
 # Tarefa para verificar e despachar comandos agendados a cada minuto
 CELERY_BEAT_SCHEDULE = {
@@ -196,16 +157,13 @@ CELERY_BEAT_SCHEDULE = {
 
 }
 
-
-# settings.py
-
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-
 
 JAZZMIN_SETTINGS = {
 
